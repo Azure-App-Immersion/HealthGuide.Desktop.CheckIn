@@ -6,8 +6,8 @@ const url = require("url");
 let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 1366,
+    height: 768,
     icon: __dirname + "/img/icon.png"
   });
   mainWindow.loadURL(

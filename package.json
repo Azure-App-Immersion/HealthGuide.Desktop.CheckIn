@@ -14,7 +14,9 @@
     "prop-types": "^15.5.10",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-http-request": "^1.0.3",
     "react-loading": "0.0.9",
+    "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1"
   },
   "devDependencies": {
