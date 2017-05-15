@@ -11,6 +11,7 @@ import {
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import TextField from "material-ui/TextField";
+import Keyboard from "react-material-ui-keyboard";
 import { orange500, blue500 } from "material-ui/styles/colors";
 
 class FormComponent extends Component {
@@ -28,22 +29,35 @@ class FormComponent extends Component {
         });
       }
     };
-    this.updateLastName = event => {
-      this.setState({
-        lastName: event.target.value
-      });
-    };
-    this.updateFirstName = event => {
-      this.setState({
-        firstName: event.target.value
-      });
-    };
+    this.handleLastName = this.updateLastName.bind(this);
+    this.handleFirstName = this.updateFirstName.bind(this);
+    this.keyboardLayout = [
+      ['q',        'w', 'e', 'r', 't', 'y', 'u', 'i', 'o',         'p'],
+      ['a',        's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'Backspace'],
+      ['CapsLock', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '-',  'CapsLock'],
+      ['Escape',   '\'', ',',         '     ',         '.',    'Enter']
+    ];
   }
+
+  updateLastName(input) {
+      this.setState({
+        lastName: input
+      });
+  }
+
+  updateFirstName(input) {
+      this.setState({
+        firstName: input
+      });
+  }
+
   render() {
     if (this.state.redirectToVerification) {
       return (
         <Redirect
-          to={"/verification/" + this.state.firstName + "/" + this.state.lastName}
+          to={
+            "/verification/" + this.state.firstName + "/" + this.state.lastName
+          }
         />
       );
     }
@@ -52,8 +66,7 @@ class FormComponent extends Component {
         style={{
           display: "flex",
           flex: "row",
-          "flex-wrap": "wrap",
-          "justify-content": "space-around"
+          justifyContent: "space-around"
         }}
       >
         <Paper
@@ -62,35 +75,81 @@ class FormComponent extends Component {
             width: 900,
             margin: 20,
             textAlign: "center",
-            display: "inline-block"
+            display: "flex",
+            flexDirection: "column"
           }}
           zDepth={5}
         >
-          <CardTitle title="Lookup Your Appointment Information" />
-          <CardText>
-            <TextField
-              hintText="Last Name"
-              value={this.state.lastName}
-              onChange={this.updateLastName}
-              hintStyle={{ color: orange500 }}
-            />
-            <br />
-            <TextField
-              hintText="First Name"
-              value={this.state.firstName}
-              onChange={this.updateFirstName}
-              hintStyle={{ color: orange500 }}
-            />
-          </CardText>
-          <CardActions>
-            <FloatingActionButton
-              secondary={true}
-              onTouchTap={this.handleFormSubmission}
-              disabled={!(this.state.firstName && this.state.lastName)}
+          <Card
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column"
+            }}
+            containerStyle={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column"
+            }}
+          >
+            <CardTitle title="Lookup Your Appointment Information" />
+            <CardText style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "space-around"
+            }}>
+              <Keyboard
+                textField={
+                  <TextField
+                    id="lastName"
+                    hintText="Last Name"
+                    value={this.state.lastName}
+                    hintStyle={{ color: orange500 }}
+                  />
+                }
+                automatic
+                onInput={this.handleLastName}
+                layouts={[this.keyboardLayout]}
+                keyboardKeyHeight={50}
+                keyboardKeyWidth={100}
+                keyboardKeySymbolSize={36}
+              />
+              <br />
+              <Keyboard
+                textField={
+                  <TextField
+                    id="firstName"
+                    hintText="First Name"
+                    value={this.state.firstName}
+                    hintStyle={{ color: orange500 }}
+                  />
+                }
+                automatic
+                onInput={this.handleFirstName}
+                layouts={[this.keyboardLayout]}
+                keyboardKeyHeight={50}
+                keyboardKeyWidth={100}
+                keyboardKeySymbolSize={36}
+              />
+            </CardText>
+            <CardActions
+              style={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end"
+              }}
             >
-              <ContentAdd />
-            </FloatingActionButton>
-          </CardActions>
+              <FloatingActionButton
+                secondary={true}
+                onTouchTap={this.handleFormSubmission}
+                disabled={!(this.state.firstName && this.state.lastName)}
+              >
+                <ContentAdd />
+              </FloatingActionButton>
+            </CardActions>
+          </Card>
         </Paper>
       </article>
     );

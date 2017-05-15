@@ -24,8 +24,7 @@ class StartComponent extends Component {
         style={{
           display: "flex",
           flex: "row",
-          "flex-wrap": "wrap",
-          "justify-content": "space-around"
+          justifyContent: "space-around"
         }}
       >
         <Paper
@@ -34,13 +33,21 @@ class StartComponent extends Component {
             width: 400,
             margin: 20,
             textAlign: "center",
-            display: "inline-block"
+            display: "flex",
+            flexDirection: "column"
           }}
           zDepth={5}
         >
           <Card
             style={{
-              height: "100%"
+              display: "flex",
+              flex: 1,
+              flexDirection: "column"
+            }}
+            containerStyle={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column"
             }}
           >
             <CardMedia>
@@ -50,7 +57,14 @@ class StartComponent extends Component {
             <CardText>
               Check in to your upcoming appointment
             </CardText>
-            <CardActions>
+            <CardActions
+              style={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "flex-end"
+              }}
+            >
               <FloatingActionButton onTouchTap={this.handleCheckIn}>
                 <ContentAdd />
               </FloatingActionButton>

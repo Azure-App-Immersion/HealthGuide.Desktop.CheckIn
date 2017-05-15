@@ -32,6 +32,6 @@ app.on("activate", function() {
     createWindow();
   }
 });
-app.on("browser-window-created", function(e, window) {
+/*app.on("browser-window-created", function(e, window) {
   window.setMenu(null);
-});
+});*/

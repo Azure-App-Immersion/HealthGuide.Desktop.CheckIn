@@ -16,8 +16,7 @@ class VerificationComponent extends Component {
         style={{
           display: "flex",
           flex: "row",
-          "flex-wrap": "wrap",
-          "justify-content": "space-around"
+          justifyContent: "space-around"
         }}
       >
         <Paper
@@ -26,7 +25,8 @@ class VerificationComponent extends Component {
             width: 900,
             margin: 20,
             textAlign: "center",
-            display: "inline-block"
+            display: "flex",
+            flexDirection: "column"
           }}
           zDepth={5}
         >
@@ -47,9 +47,7 @@ class VerificationComponent extends Component {
               } else {
                 return (
                   <div>
-                    <code>
                       {JSON.stringify(result)}
-                    </code>
                   </div>
                 );
               }
