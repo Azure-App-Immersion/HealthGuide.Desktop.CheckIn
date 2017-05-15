@@ -12,7 +12,7 @@ import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import TextField from "material-ui/TextField";
 import Keyboard from "react-material-ui-keyboard";
-import { orange500, blue500 } from "material-ui/styles/colors";
+import { cyan500 } from "material-ui/styles/colors";
 
 class FormComponent extends Component {
   constructor(props) {
@@ -32,23 +32,23 @@ class FormComponent extends Component {
     this.handleLastName = this.updateLastName.bind(this);
     this.handleFirstName = this.updateFirstName.bind(this);
     this.keyboardLayout = [
-      ['q',        'w', 'e', 'r', 't', 'y', 'u', 'i', 'o',         'p'],
-      ['a',        's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'Backspace'],
-      ['CapsLock', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '-',  'CapsLock'],
-      ['Escape',   '\'', ',',         '     ',         '.',    'Enter']
+      ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+      ["a", "s", "d", "f", "g", "h", "j", "k", "l", "Backspace"],
+      ["CapsLock", "z", "x", "c", "v", "b", "n", "m", "-", "CapsLock"],
+      ["Escape", "'", ",", "     ", ".", "Enter"]
     ];
   }
 
   updateLastName(input) {
-      this.setState({
-        lastName: input
-      });
+    this.setState({
+      lastName: input
+    });
   }
 
   updateFirstName(input) {
-      this.setState({
-        firstName: input
-      });
+    this.setState({
+      firstName: input
+    });
   }
 
   render() {
@@ -93,23 +93,25 @@ class FormComponent extends Component {
             }}
           >
             <CardTitle title="Lookup Your Appointment Information" />
-            <CardText style={{
-              display: "flex",
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "space-around"
-            }}>
+            <CardText
+              style={{
+                display: "flex",
+                flex: 1,
+                flexDirection: "column",
+                justifyContent: "flex-start"
+              }}
+            >
               <Keyboard
                 textField={
                   <TextField
-                    id="lastName"
-                    hintText="Last Name"
-                    value={this.state.lastName}
-                    hintStyle={{ color: orange500 }}
+                    id="firstName"
+                    hintText="First Name"
+                    value={this.state.firstName}
+                    hintStyle={{ color: cyan500 }}
                   />
                 }
                 automatic
-                onInput={this.handleLastName}
+                onInput={this.handleFirstName}
                 layouts={[this.keyboardLayout]}
                 keyboardKeyHeight={50}
                 keyboardKeyWidth={100}
@@ -119,14 +121,14 @@ class FormComponent extends Component {
               <Keyboard
                 textField={
                   <TextField
-                    id="firstName"
-                    hintText="First Name"
-                    value={this.state.firstName}
-                    hintStyle={{ color: orange500 }}
+                    id="lastName"
+                    hintText="Last Name"
+                    value={this.state.lastName}
+                    hintStyle={{ color: cyan500 }}
                   />
                 }
                 automatic
-                onInput={this.handleFirstName}
+                onInput={this.handleLastName}
                 layouts={[this.keyboardLayout]}
                 keyboardKeyHeight={50}
                 keyboardKeyWidth={100}
@@ -142,7 +144,6 @@ class FormComponent extends Component {
               }}
             >
               <FloatingActionButton
-                secondary={true}
                 onTouchTap={this.handleFormSubmission}
                 disabled={!(this.state.firstName && this.state.lastName)}
               >
