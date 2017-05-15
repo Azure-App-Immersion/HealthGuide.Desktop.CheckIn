@@ -13,7 +13,7 @@ class ShellComponent extends Component {
           { window.location.pathname.includes('index.html') && <Redirect to="/" /> }
           <Route exact path="/" component={StartComponent} />
           <Route path="/form" component={FormComponent} />
-          <Route path="/verification" component={VerificationComponent} />
+          <Route path="/verification/:firstName/:lastName" component={VerificationComponent} />
           <Route path="/done" component={DoneComponent} />
         </div>
       </Router>

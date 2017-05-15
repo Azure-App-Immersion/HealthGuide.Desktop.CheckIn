@@ -41107,6 +41107,8 @@ var _Paper = require("material-ui/Paper");
 
 var _Paper2 = _interopRequireDefault(_Paper);
 
+var _reactRouterDom = require("react-router-dom");
+
 var _Card = require("material-ui/Card");
 
 var _FloatingActionButton = require("material-ui/FloatingActionButton");
@@ -41140,12 +41142,15 @@ var FormComponent = function (_Component) {
     var _this = _possibleConstructorReturn(this, (FormComponent.__proto__ || Object.getPrototypeOf(FormComponent)).call(this, props));
 
     _this.state = {
-      firstName: null,
-      lastName: null
+      firstName: "",
+      lastName: "",
+      redirectToVerification: false
     };
     _this.handleFormSubmission = function () {
       if (_this.state.firstName && _this.state.lastName) {
-        _this.props.history.push("/verification");
+        _this.setState({
+          redirectToVerification: true
+        });
       }
     };
     _this.updateLastName = function (event) {
@@ -41164,6 +41169,11 @@ var FormComponent = function (_Component) {
   _createClass(FormComponent, [{
     key: "render",
     value: function render() {
+      if (this.state.redirectToVerification) {
+        return _react2.default.createElement(_reactRouterDom.Redirect, {
+          to: "/verification/" + this.state.firstName + "/" + this.state.lastName
+        });
+      }
       return _react2.default.createElement(
         "article",
         {
@@ -41227,7 +41237,7 @@ var FormComponent = function (_Component) {
 
 exports.default = FormComponent;
 
-},{"material-ui/Card":188,"material-ui/FloatingActionButton":190,"material-ui/Paper":196,"material-ui/TextField":204,"material-ui/styles/colors":214,"material-ui/svg-icons/content/add":220,"react":434}],455:[function(require,module,exports){
+},{"material-ui/Card":188,"material-ui/FloatingActionButton":190,"material-ui/Paper":196,"material-ui/TextField":204,"material-ui/styles/colors":214,"material-ui/svg-icons/content/add":220,"react":434,"react-router-dom":387}],455:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -41287,7 +41297,7 @@ var ShellComponent = function (_Component) {
           window.location.pathname.includes('index.html') && _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" }),
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _start2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: "/form", component: _form2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: "/verification", component: _verification2.default }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: "/verification/:firstName/:lastName", component: _verification2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: "/done", component: _done2.default })
         )
       );
@@ -41445,10 +41455,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var VerificationComponent = function (_Component) {
   _inherits(VerificationComponent, _Component);
 
-  function VerificationComponent() {
+  function VerificationComponent(props) {
     _classCallCheck(this, VerificationComponent);
 
-    return _possibleConstructorReturn(this, (VerificationComponent.__proto__ || Object.getPrototypeOf(VerificationComponent)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (VerificationComponent.__proto__ || Object.getPrototypeOf(VerificationComponent)).call(this, props));
+
+    _this.state = {
+      firstName: _this.props.match.params.firstName,
+      lastName: _this.props.match.params.lastName
+    };
+    return _this;
   }
 
   _createClass(VerificationComponent, [{
@@ -41476,6 +41492,13 @@ var VerificationComponent = function (_Component) {
             },
             zDepth: 5
           },
+          _react2.default.createElement(
+            "h3",
+            null,
+            this.state.firstName,
+            "\xA0",
+            this.state.lastName
+          ),
           _react2.default.createElement(
             _reactHttpRequest2.default,
             {

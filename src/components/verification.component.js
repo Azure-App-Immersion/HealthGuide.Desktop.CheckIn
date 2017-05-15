@@ -3,6 +3,13 @@ import Request from "react-http-request";
 import Paper from "material-ui/Paper";
 
 class VerificationComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstName: this.props.match.params.firstName,
+      lastName: this.props.match.params.lastName
+    };
+  }
   render() {
     return (
       <article
@@ -23,6 +30,7 @@ class VerificationComponent extends Component {
           }}
           zDepth={5}
         >
+          <h3>{this.state.firstName}&nbsp;{this.state.lastName}</h3>
           <Request
             url="http://httpbin.org/ip"
             method="get"

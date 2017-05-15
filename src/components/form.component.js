@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Paper from "material-ui/Paper";
+import { Redirect } from "react-router-dom";
 import {
   Card,
   CardMedia,
@@ -16,12 +17,15 @@ class FormComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: null,
-      lastName: null
+      firstName: "",
+      lastName: "",
+      redirectToVerification: false
     };
     this.handleFormSubmission = () => {
       if (this.state.firstName && this.state.lastName) {
-        this.props.history.push("/verification");
+        this.setState({
+          redirectToVerification: true
+        });
       }
     };
     this.updateLastName = event => {
@@ -36,6 +40,13 @@ class FormComponent extends Component {
     };
   }
   render() {
+    if (this.state.redirectToVerification) {
+      return (
+        <Redirect
+          to={"/verification/" + this.state.firstName + "/" + this.state.lastName}
+        />
+      );
+    }
     return (
       <article
         style={{
