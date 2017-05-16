@@ -89,29 +89,29 @@ class VerificationComponent extends Component {
                       >
                         <CardHeader
                           title={
-                            result.body.Patient.FirstName +
+                            result.body.patient.firstName +
                               " " +
-                              result.body.Patient.LastName
+                              result.body.patient.lastName
                           }
                           subtitle={
-                            result.body.Patient.EmailAddress +
+                            result.body.patient.emailAddress +
                               " " +
-                              result.body.Patient.PhoneNumber
+                              result.body.patient.phoneNumber
                           }
                         />
                         <CardTitle
-                          title={Moment(result.body.Slot).format(
+                          title={Moment(result.body.slot).format(
                             "MMM D, h:mm A"
                           )}
                           subtitle={
-                            result.body.Doctor.Name +
+                            result.body.doctor.name +
                               " [" +
-                              result.body.Location.Name +
+                              result.body.location.name +
                               "]"
                           }
                         />
                         <CardText>
-                          {result.body.Visit.Reason}
+                          {result.body.visit.reason}
                         </CardText>
                         <CardActions
                           style={{
@@ -119,7 +119,7 @@ class VerificationComponent extends Component {
                             justifyContent: "flex-end"
                           }}
                         >
-                          <Link to={"/checkin/" + result.body.Id}>
+                          <Link to={"/checkin/" + result.body.id}>
                             <RaisedButton
                               label="Check-In"
                               primary={true}

@@ -48643,11 +48643,11 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = require("react-router-dom");
-
 var _reactHttpRequest = require("react-http-request");
 
 var _reactHttpRequest2 = _interopRequireDefault(_reactHttpRequest);
+
+var _reactRouterDom = require("react-router-dom");
 
 var _configuration = require("./configuration");
 
@@ -48661,9 +48661,15 @@ var _RaisedButton = require("material-ui/RaisedButton");
 
 var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
+var _cloudCircle = require("material-ui/svg-icons/file/cloud-circle");
+
+var _cloudCircle2 = _interopRequireDefault(_cloudCircle);
+
 var _check = require("material-ui/svg-icons/navigation/check");
 
 var _check2 = _interopRequireDefault(_check);
+
+var _colors = require("material-ui/styles/colors");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48714,23 +48720,69 @@ var CheckInComponent = function (_Component) {
             zDepth: 5
           },
           _react2.default.createElement(
-            "h2",
-            null,
-            "You Are Now Checked In"
-          ),
-          _react2.default.createElement(
-            "p",
-            null,
-            "Please have a seat. You will be called when your doctor is ready to see you."
-          ),
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: "/" },
-            _react2.default.createElement(_RaisedButton2.default, {
-              label: "Done",
-              primary: true,
-              icon: _react2.default.createElement(_check2.default, null)
-            })
+            _reactHttpRequest2.default,
+            {
+              url: this.state.api,
+              method: "post",
+              accept: "application/json",
+              verbose: true,
+              send: {
+                "id": this.state.id
+              }
+            },
+            function (_ref) {
+              var error = _ref.error,
+                  result = _ref.result,
+                  loading = _ref.loading;
+
+              if (loading) {
+                return _react2.default.createElement(
+                  "div",
+                  {
+                    style: {
+                      display: "flex",
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }
+                  },
+                  _react2.default.createElement(_cloudCircle2.default, {
+                    className: "animate",
+                    color: _colors.cyan500,
+                    style: {
+                      height: 250,
+                      width: 250
+                    }
+                  })
+                );
+              } else {
+                if (result.ok) {
+                  return _react2.default.createElement(
+                    "div",
+                    null,
+                    _react2.default.createElement(
+                      "h2",
+                      null,
+                      "You Are Now Checked In"
+                    ),
+                    _react2.default.createElement(
+                      "p",
+                      null,
+                      "Please have a seat. You will be called when your doctor is ready to see you."
+                    ),
+                    _react2.default.createElement(
+                      _reactRouterDom.Link,
+                      { to: "/" },
+                      _react2.default.createElement(_RaisedButton2.default, {
+                        label: "Done",
+                        primary: true,
+                        icon: _react2.default.createElement(_check2.default, null)
+                      })
+                    )
+                  );
+                }
+              }
+            }
           )
         )
       );
@@ -48742,7 +48794,7 @@ var CheckInComponent = function (_Component) {
 
 exports.default = CheckInComponent;
 
-},{"./configuration":485,"material-ui/Paper":207,"material-ui/RaisedButton":209,"material-ui/svg-icons/navigation/check":249,"react":465,"react-http-request":402,"react-router-dom":420}],485:[function(require,module,exports){
+},{"./configuration":485,"material-ui/Paper":207,"material-ui/RaisedButton":209,"material-ui/styles/colors":230,"material-ui/svg-icons/file/cloud-circle":242,"material-ui/svg-icons/navigation/check":249,"react":465,"react-http-request":402,"react-router-dom":420}],485:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -48754,8 +48806,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Configuration = function Configuration() {
   _classCallCheck(this, Configuration);
 
-  this.APPOINTMENT_VALIDATION_ENDPOINT = "http://localhost:5000/appointments/name/";
-  this.CHECKIN_ENDPOINT = "http://httpbin.org/ip";
+  this.APPOINTMENT_VALIDATION_ENDPOINT = "http://azurerev-api-appointments.azurewebsites.net/Appointments/name/";
+  this.CHECKIN_ENDPOINT = "https://azurerev-integration-functions.azurewebsites.net/checkin";
 };
 
 exports.default = Configuration;
@@ -49319,17 +49371,17 @@ var VerificationComponent = function (_Component) {
                         }
                       },
                       _react2.default.createElement(_Card.CardHeader, {
-                        title: result.body.Patient.FirstName + " " + result.body.Patient.LastName,
-                        subtitle: result.body.Patient.EmailAddress + " " + result.body.Patient.PhoneNumber
+                        title: result.body.patient.firstName + " " + result.body.patient.lastName,
+                        subtitle: result.body.patient.emailAddress + " " + result.body.patient.phoneNumber
                       }),
                       _react2.default.createElement(_Card.CardTitle, {
-                        title: (0, _moment2.default)(result.body.Slot).format("MMM D, h:mm A"),
-                        subtitle: result.body.Doctor.Name + " [" + result.body.Location.Name + "]"
+                        title: (0, _moment2.default)(result.body.slot).format("MMM D, h:mm A"),
+                        subtitle: result.body.doctor.name + " [" + result.body.location.name + "]"
                       }),
                       _react2.default.createElement(
                         _Card.CardText,
                         null,
-                        result.body.Visit.Reason
+                        result.body.visit.reason
                       ),
                       _react2.default.createElement(
                         _Card.CardActions,
@@ -49341,7 +49393,7 @@ var VerificationComponent = function (_Component) {
                         },
                         _react2.default.createElement(
                           _reactRouterDom.Link,
-                          { to: "/checkin/" + result.body.Id },
+                          { to: "/checkin/" + result.body.id },
                           _react2.default.createElement(_RaisedButton2.default, {
                             label: "Check-In",
                             primary: true,
